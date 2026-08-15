@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atualizar Chamado</title>
+</head>
+<body>
+
+    <h1>Atualizar Chamado</h1>
+
+    <p>
+        <strong>Chamado:</strong>
+        {{ atualizar.titulo }}
+    </p>
+
+    <p>
+        <strong>Descrição:</strong>
+        {{ atualizar.descricao }}
+    </p>
+
+    <p>
+        <strong>Resolvido:</strong>
+
+        {% if atualizar.resolvido %}
+            Sim
+        {% else %}
+            Não
+        {% endif %}
+    </p>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>
+            <input
+                type="checkbox"
+                name="resolvido"
+                {% if atualizar.resolvido %}checked{% endif %}
+            >
+            Chamado resolvido
+        </label>
+
+        <br><br>
+
+        <button type="submit">Salvar</button>
+    </form>
+
+</body>
+</html>

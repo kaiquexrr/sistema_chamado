@@ -13,6 +13,7 @@ TIPO_CHOICES = (
     ('SOFTWARE','SOFTWARE')
 )
 
+
 class Chamado(models.Model):
     titulo = models.CharField(max_length=50)
     descricao = models.CharField(max_length=100)
@@ -21,7 +22,7 @@ class Chamado(models.Model):
     data_criacao = models.DateTimeField(auto_now_add=True)
     atualizado_em = models.DateTimeField(auto_now=True)
     email = models.EmailField()
-
+    resolvido = models.BooleanField(default=False)
     def __str__(self):
         return self.titulo
 

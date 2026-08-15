@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Chamado
 from .forms import ChamadoForm
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404,redirect
 
 # Create your views here.
 
@@ -12,15 +12,6 @@ def listar_chamados(request):
         'chamados':chamados
     }
     return render(request, 'chamados/listar_chamados.html',contexto)
-
-
-def detalhe_chamado(request,id):
-    chamado = get_object_or_404(chamado, id=id)
-
-    contexto = {
-        'chamado':chamado
-    }
-    return render(request,'chamados/detalhe_chamado.html',contexto)
 
 
 def criar_chamado(request):
@@ -40,9 +31,25 @@ def criar_chamado(request):
 
 
 
-def atualizar_status(request,id):
-    pass
+def atualizar_status(request, id):
+    chamado = get_object_or_404(Chamado, id=id)
+
+    if request.method == 'POST':
+        chamado.resolvido = 'resolvido' in request.POST
+        chamado.save()
+
+        return redirect('listar_chamados')
+
+    contexto = {
+        'atualizar': chamado
+    }
+
+    return render(request, 'chamados/atualizar_status.html', contexto)
 
 
 def excluir_chamado(request,id):
-    pass
+    chamado = get_object_or_404(Chamado,id=id)
+
+    chamado.delete()
+    return redirect('listar_chamados')
+    

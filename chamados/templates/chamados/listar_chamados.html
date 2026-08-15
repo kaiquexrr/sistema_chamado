@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Chamados</title>
+</head>
+<body>
+
+    <h1>Lista de Chamados</h1>
+
+    <a href="{% url 'form_criar_chamado' %}">
+        Criar chamado
+    </a>
+
+    <hr>
+
+    {% for chamado in chamados %}
+
+        <h2>{{ chamado.titulo }}</h2>
+
+        <p>
+            <strong>Descrição:</strong>
+            {{ chamado.descricao }}
+        </p>
+
+        <p>
+            <strong>Prioridade:</strong>
+            {{ chamado.get_prioridade_display }}
+        </p>
+
+        <p>
+            <strong>Tipo:</strong>
+            {{ chamado.get_tipo_display }}
+        </p>
+
+        <p>
+            <strong>E-mail:</strong>
+            {{ chamado.email }}
+        </p>
+
+        <p>
+            <strong>Criado em:</strong>
+            {{ chamado.data_criacao }}
+        </p>
+
+        <p>
+            <strong>Última atualização:</strong>
+            {{ chamado.atualizado_em }}
+        </p>
+
+        <p>
+            <strong>Resolvido:</strong>
+
+            {% if chamado.resolvido %}
+                Sim
+            {% else %}
+                Não
+            {% endif %}
+        </p>
+
+        <a href="{% url 'atualizar_status' chamado.id %}">
+            Atualizar
+        </a>
+
+        <a href="{% url 'excluir_chamado' chamado.id %}">
+            Excluir
+        </a>
+
+        <hr>
+
+    {% empty %}
+
+        <p>Nenhum chamado cadastrado.</p>
+
+    {% endfor %}
+
+</body>
+</html>
