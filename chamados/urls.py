@@ -3,8 +3,8 @@ from chamados import views
 
 
 urlpatterns = [
-    path('',views.listar_chamados, name="listar_chamados"),
-    path('criar_chamado/', views.criar_chamado, name="form_criar_chamado"),
-    path('atualizar_status/<int:id>/',views.atualizar_status, name="atualizar_status"),
-    path('excluir_chamado/<int:id>/',views.excluir_chamado,name="excluir_chamado")
+    path('',views.ChamadoListView.as_view(), name="listar_chamados"),
+    path('criar_chamado/', views.ChamadoCreateView.as_view(), name="form_criar_chamado"),
+    path('atualizar_status/<int:pk>/',views.atualizar_status, name="atualizar_status"),
+    path('excluir_chamado/<int:pk>/',views.ChamadoDeleteView.as_view(),name="excluir_chamado")
 ]
