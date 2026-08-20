@@ -7,21 +7,29 @@ from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView
 from django.views.generic import DeleteView
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 
 
-class ChamadoListView(ListView):
+class ChamadoListView(LoginRequiredMixin,ListView):
     model = Chamado
     template_name = 'chamados/listar_chamados.html'
     context_object_name = 'chamados'
 
-class ChamadoCreateView(CreateView):
+    def get_queryset(self):
+        return Chamado.objects.filter(usuario=self.request.user)
+
+
+class ChamadoCreateView(LoginRequiredMixin,CreateView):
     model = Chamado
     form_class = ChamadoForm
     template_name = 'chamados/formulario_modelform.html'
     success_url = reverse_lazy("listar_chamados")
+
+    def form_valid(self,form):
+        form.instance.usuario = self.request.user
+        return super().form_valid(form)
 
 
 
